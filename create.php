@@ -10,31 +10,26 @@
     $error = "";
     $succs = "";
     
-    try 
-    {  
-        $query = "CREATE TABLE users (
-        id SERIAL,
-        name TEXT NOT NULL,
-        log TEXT NOT NULL,
-        pas TEXT NOT NULL,
-        sum double precision NOT NULL)";
-        $result = pg_query($query) or die(pg_last_error());
-        succs .= "Table users is created.<br>";
-        
-        $query = "CREATE TABLE transaction (
-        id SERIAL,
-        user_id INT NOT NULL,
-        datetime TEXT NOT NULL,
-        type TEXT NOT NULL,
-        sum double precision NOT NULL,
-        status TEXT NOT NULL)";
-        $result = pg_query($query) or die(pg_last_error());
-        succs .= "Таблицы успешно созданы.<br>";
-    } 
-    catch (Exception $e) 
-    {
-        $error .= "Ошибка создания таблиц.<br>";
-    }  
+
+	$query = "CREATE TABLE users (
+	id SERIAL,
+	name TEXT NOT NULL,
+	log TEXT NOT NULL,
+	pas TEXT NOT NULL,
+	sum double precision NOT NULL)";
+	$result = pg_query($query) or die(pg_last_error());
+
+
+	$query = "CREATE TABLE transaction (
+	id SERIAL,
+	user_id INT NOT NULL,
+	datetime TEXT NOT NULL,
+	type TEXT NOT NULL,
+	sum double precision NOT NULL,
+	status TEXT NOT NULL)";
+	$result = pg_query($query) or die(pg_last_error());
+
+
     pg_free_result($result);
     pg_close($dbconn);  
     */
