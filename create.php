@@ -1,5 +1,5 @@
 <?
-/*
+
     $dbconn = pg_connect("
 	host     = ec2-54-217-245-66.eu-west-1.compute.amazonaws.com
 	dbname   = d1moulb9o83itl
@@ -10,29 +10,34 @@
     $error = "";
     $succs = "";
     
-
-	$query = "CREATE TABLE users (
-	id SERIAL,
-	name TEXT NOT NULL,
-	log TEXT NOT NULL,
-	pas TEXT NOT NULL,
-	sum double precision NOT NULL)";
-	$result = pg_query($query) or die(pg_last_error());
-
-
-	$query = "CREATE TABLE transaction (
-	id SERIAL,
-	user_id INT NOT NULL,
-	datetime TEXT NOT NULL,
-	type TEXT NOT NULL,
-	sum double precision NOT NULL,
-	status TEXT NOT NULL)";
-	$result = pg_query($query) or die(pg_last_error());
-
-
+    try 
+    {  
+        $query = "CREATE TABLE users (
+        id SERIAL,
+        name TEXT NOT NULL,
+        log TEXT NOT NULL,
+        pas TEXT NOT NULL,
+        sum double precision NOT NULL)";
+        $result = pg_query($query) or die(pg_last_error());
+        succs .= "Table users is created.<br>";
+        
+        $query = "CREATE TABLE transaction (
+        id SERIAL,
+        user_id INT NOT NULL,
+        datetime TEXT NOT NULL,
+        type TEXT NOT NULL,
+        sum double precision NOT NULL,
+        status TEXT NOT NULL)";
+        $result = pg_query($query) or die(pg_last_error());
+        succs .= "Таблицы успешно созданы.<br>";
+    } 
+    catch (Exception $e) 
+    {
+        $error .= "Ошибка создания таблиц.<br>";
+    }  
     pg_free_result($result);
     pg_close($dbconn);  
-    */
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
