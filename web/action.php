@@ -32,8 +32,8 @@
     }    
     if ($aut == false) 
     {
-        header('Location: index.php');
-        exit;
+        //header('Location: index.php');
+        //exit;
     }
 
 ?>
