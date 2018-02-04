@@ -21,27 +21,25 @@
     {   
         $log = $_COOKIE['log'];
         $pas = $_COOKIE['pas'];
-        if (isset($log) and isset($pas))
+
+        $query = "SELECT * FROM users WHERE log = '$log' LIMIT 1";
+        $result = pg_query($query) or die(pg_last_error());
+        if(pg_num_rows($result) > 0)
         {
-            $query = "SELECT * FROM users WHERE log = '$log' LIMIT 1";
-            $result = pg_query($query) or die(pg_last_error());
-            if(pg_num_rows($result) > 0)
+            $line = pg_fetch_array($result, null, PGSQL_ASSOC);
+            if($line["pas"] == $pas)
             {
-                $line = pg_fetch_array($result, null, PGSQL_ASSOC);
-                if($line["pas"] == $pas)
-                {
-                    setcookie("log", $log, time() + 60 * 60 * 24 * 30);
-                    setcookie("pas", $pas, time() + 60 * 60 * 24 * 30);
-                    $aut = true;
-                    $ballans = $line["sum"];
-                    $name = $line["name"];
-                    
-                    $succs .= "Успешная авторизация.<br>";
-                }
-                else $error .= "Неверный логин или пароль.<br>";
+                setcookie("log", $log, time() + 60 * 60 * 24 * 30);
+                setcookie("pas", $pas, time() + 60 * 60 * 24 * 30);
+                $aut = true;
+                $ballans = $line["sum"];
+                $name = $line["name"];
+                
+                $succs .= "Успешная авторизация.<br>";
             }
             else $error .= "Неверный логин или пароль.<br>";
         }
+        else $error .= "Неверный логин или пароль.<br>";
     }
    
     if (isset($_POST['log']) and isset($_POST['pas']))
@@ -99,8 +97,9 @@
         }
         
     }
-    echo $succs;
-    echo $error;
+    echo "1";
+    echo "2";
+    
     pg_free_result($result);
     pg_close($dbconn);
 ?>
