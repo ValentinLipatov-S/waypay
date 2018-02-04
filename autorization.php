@@ -101,7 +101,8 @@
             }
         }
     }
-    
+    echo $succs;
+    echo $error;
     pg_free_result($result);
     pg_close($dbconn);
 ?>
