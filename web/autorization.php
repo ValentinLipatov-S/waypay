@@ -42,14 +42,14 @@
         else $error .= "Неверный логин или пароль.<br>";
     }
    
-    if (isset($_POST['log']) and isset($_POST['pas']))
-    {
-        $log = $_POST['log'];
-        $pas = $_POST['pas'];
+
  
-        if(isset($_POST['signin']) and isset($_POST['name'])) 
-        {
-            if(strlen($_POST['name']) > 2 and strlen($_POST['name']) < 30 and 
+        if(isset($_POST['signin']) and isset($name) and isset($_POST['s_log']) and isset($_POST['s_pas'])) 
+        { 
+            $log = $_POST['s_log'];
+            $pas = $_POST['s_pas'];
+            $name = $_POST['s_name']);
+            if(strlen($name) > 2 and strlen($name) < 30 and 
                 strlen($log) > 5 and strlen($log) < 30 and 
                 strlen($pas) > 5 and strlen($pas) < 30)
             {
@@ -57,14 +57,14 @@
                 $result = pg_query($query) or die(pg_last_error());
                 if(pg_num_rows($result) == 0)
                 {
-                    $query = "INSERT INTO users (name, log, pas, sum) VALUES ('$_POST[name]', '$log', '$pas', 0)";
+                    $query = "INSERT INTO users (name, log, pas, sum) VALUES ('$name', '$log', '$pas', 0)";
                     $result = pg_query($query) or die(pg_last_error());
                     
                     setcookie("log", $log, time() + 60 * 60 * 24 * 30);
                     setcookie("pas", $pas, time() + 60 * 60 * 24 * 30);
                     $aut = true;
                     $ballans = 0;
-                    $name = $_POST['name'];
+                    $name = $name;
                     
                     $succs .= "Пользователь зарегестрирован.<br>";
                 }
@@ -74,8 +74,11 @@
         }
         else $error .= "Заполните все поля.<br>";
         
-        if(isset($_POST['login'])) 
+        if(isset($_POST['login']) isset($_POST['l_log']) and isset($_POST['l_pas'])) 
         {    
+            $log = $_POST['l_log'];
+            $pas = $_POST['l_pas'];
+            
             $query = "SELECT * FROM users WHERE log = '$log' LIMIT 1";
             $result = pg_query($query) or die(pg_last_error());
             if(pg_num_rows($result) > 0)
@@ -96,7 +99,7 @@
             else $error .= "Неверный логин или пароль.<br>";
         }
         
-    }
+    
     echo "1";
     echo "2";
     
