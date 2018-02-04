@@ -1,4 +1,4 @@
-<? 
+<?php 
     header("Content-Type: text/html; charset=UTF-8");
     include("autorization.php");
     if(isset($_POST['add']) and isset($_POST['sum'])) 
