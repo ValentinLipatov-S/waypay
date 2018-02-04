@@ -1,6 +1,6 @@
 <?php 
     header("Content-Type: text/html; charset=UTF-8");
-    include("autorization.php");
+    //include("autorization.php");
 
     if ($aut) 
     {
