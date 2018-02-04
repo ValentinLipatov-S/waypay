@@ -100,9 +100,6 @@
         }
         
     
-    echo "1";
-    echo "2";
-    
     pg_free_result($result);
     pg_close($dbconn);
 ?>
