@@ -36,19 +36,19 @@ if (isset($_GET['code'])) {
     if (isset($token['access_token'])) {
         $params = array(
             'user_ids'         => $token['user_id'],
-            'fields'       => 'uid,first_name,last_name,screen_name,sex,bdate,photo_big',
+            'fields'       => 'id,first_name,last_name,screen_name,sex,bdate,photo_big',
             'access_token' => $token['access_token']
         );
 
         $userInfo = json_decode(file_get_contents('https://api.vk.com/method/users.get' . '?' . urldecode(http_build_query($params))), true);
-        if (isset($userInfo['response'][0]['uid'])) {
+        if (isset($userInfo['response'][0]['id'])) {
             $userInfo = $userInfo['response'][0];
             $result = true;
         }
     }
 
     if ($result) {
-        echo "Социальный ID пользователя: " . $userInfo['uid'] . '<br />';
+        echo "Социальный ID пользователя: " . $userInfo['id'] . '<br />';
         echo "Имя пользователя: " . $userInfo['first_name'] . '<br />';
         echo "Ссылка на профиль пользователя: " . $userInfo['screen_name'] . '<br />';
         echo "Пол пользователя: " . $userInfo['sex'] . '<br />';
