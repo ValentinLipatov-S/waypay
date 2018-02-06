@@ -26,26 +26,18 @@ if (isset($_GET['code'])) {
 		
 		$result = false;
 		$params = array(
-			'client_id' => $client_id,
-			'client_secret' => $client_secret,
-			'code' => $_GET['code'],
-			'redirect_uri' => $redirect_uri
-		);
+				'user_ids'         => $token['user_id'],
+				'fields'       => 'uid,first_name,last_name,screen_name,sex,bdate,photo_big',
+				'access_token' => $token['access_token']
+			);
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'https://oauth.vk.com/access_token' . '?' . urldecode(http_build_query($params)));
-		curl_setopt($ch, CURLOPT_HEADER, false);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-		$token = json_decode(curl_exec($ch), true);   
-		curl_close($ch);
-	
-        $params = array(
-            'user_ids'     => $token['user_id'],
-            'fields'       => 'uid,first_name,last_name,screen_name,sex,bdate,photo_big,city,verified',
-			'name_case' => 'nom',
-			'v' => '5.8'
-        );
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'https://oauth.vk.com/user.get' . '?' . urldecode(http_build_query($params)));
+			curl_setopt($ch, CURLOPT_HEADER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+			$token = json_decode(curl_exec($ch), true);   
+			curl_close($ch);
 		
 		print_r ($token);
 		
