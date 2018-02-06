@@ -10,7 +10,7 @@
 
     $client_id = '6361837'; // ID приложения
     $client_secret = '9pohMcwaxBYL02WMTR3M'; // Защищённый ключ
-    $redirect_uri = 'https://waypay.herokuapp.com'; // Адрес сайта
+    $redirect_uri = 'https://waypay.herokuapp.com/'; // Адрес сайта
 
     $url = 'http://oauth.vk.com/authorize';
 
@@ -37,11 +37,15 @@ if (isset($_GET['code'])) {
         $params = array(
             'user_ids'         => $token['user_id'],
             'fields'       => 'id,first_name,last_name,screen_name,sex,bdate,photo_big',
-            'access_token' => $token['access_token']
+            'access_token' => $token['access_token'],
+			'v' => '5.71',
+			'name_case' => 'Nom'
         );
 
         $userInfo = json_decode(file_get_contents('https://api.vk.com/method/users.get' . '?' . urldecode(http_build_query($params))), true);
-        if (isset($userInfo['response'][0]['id'])) {
+        print_r($userInfo);
+		
+		if (isset($userInfo['response'][0]['id'])) {
             $userInfo = $userInfo['response'][0];
             $result = true;
         }
