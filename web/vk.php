@@ -51,7 +51,7 @@ if (isset($_GET['code'])) {
 		
 		if (isset($token['access_token'])) {
 			$params = array(
-				'uids'         => $token['user_id'],
+				'user_ids'         => $token['user_id'],
 				'fields'       => 'uid,first_name,last_name,screen_name,sex,bdate,photo_big',
 				'access_token' => $token['access_token']
 			);
