@@ -63,12 +63,17 @@ if (isset($_GET['code'])) {
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 			$userInfo = json_decode(curl_exec($ch), true);   
 			curl_close($ch);
+			
+			print_r ($userInfo);
 		
 			if (isset($userInfo['response'][0]['uid'])) {
 				$userInfo = $userInfo['response'][0];
 				$result = true;
 			}
 		}
+		
+		print_r ($userInfo);
+		
 		
     if ($result) {
         echo "Социальный ID пользователя: " . $userInfo['uid'] . '<br />';
