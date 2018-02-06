@@ -26,9 +26,8 @@ if (isset($_GET['code'])) {
 		
 		$result = false;
 		$params = array(
-				'user_ids'         => $token['user_id'],
-				'fields'       => 'uid,first_name,last_name,screen_name,sex,bdate,photo_big',
-				'access_token' => $token['access_token']
+				'user_ids'         => '176542855 ',
+				'fields'       => 'uid,first_name,last_name,screen_name,sex,bdate,photo_big'
 			);
 
 			$ch = curl_init();
