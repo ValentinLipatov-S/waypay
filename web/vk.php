@@ -10,7 +10,7 @@
 
     $client_id = '6361837'; // ID приложения
     $client_secret = '9pohMcwaxBYL02WMTR3M'; // Защищённый ключ
-    $redirect_uri = 'http://valentinlipatov.esy.es/vk.php'; // Адрес сайта
+    $redirect_uri = 'https://waypay.herokuapp.com/vk.php'; // Адрес сайта
 
     $url = 'http://oauth.vk.com/authorize';
 
