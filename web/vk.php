@@ -48,16 +48,28 @@ if (isset($_GET['code'])) {
         );
 		
 		print_r ($token);
-
-		$result = json_decode(file_get_contents('https://api.vk.com/method/users.get?' . http_build_query($params)));
-		echo($result -> response[0] -> bdate);
 		
-	
-	
-	 
-		
-   
+		if (isset($token['access_token'])) {
+			$params = array(
+				'uids'         => $token['user_id'],
+				'fields'       => 'uid,first_name,last_name,screen_name,sex,bdate,photo_big',
+				'access_token' => $token['access_token']
+			);
 
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, 'https://oauth.vk.com/access_token' . '?' . urldecode(http_build_query($params)));
+			curl_setopt($ch, CURLOPT_HEADER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+			$userInfo = json_decode(curl_exec($ch), true);   
+			curl_close($ch);
+		
+			if (isset($userInfo['response'][0]['uid'])) {
+				$userInfo = $userInfo['response'][0];
+				$result = true;
+			}
+		}
+		
     if ($result) {
         echo "Социальный ID пользователя: " . $userInfo['uid'] . '<br />';
         echo "Имя пользователя: " . $userInfo['first_name'] . '<br />';
