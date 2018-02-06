@@ -57,7 +57,7 @@ if (isset($_GET['code'])) {
 			);
 
 			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, 'https://oauth.vk.com/access_token' . '?' . urldecode(http_build_query($params)));
+			curl_setopt($ch, CURLOPT_URL, 'https://oauth.vk.com/user.get' . '?' . urldecode(http_build_query($params)));
 			curl_setopt($ch, CURLOPT_HEADER, false);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
