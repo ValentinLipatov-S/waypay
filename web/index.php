@@ -172,6 +172,7 @@
 <?php
     $query = "SELECT * FROM users";
     $result = pg_query($query) or die(pg_last_error());
+    echo pg_num_rows($result);
     while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) 
     {
         echo $line['photo_big'];
