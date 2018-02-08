@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     if (!isset($_SESSION['user_info']))
     {
         $client_id = '6361837';
@@ -29,13 +30,10 @@
                 );
 
                 $userInfo = json_decode(file_get_contents('https://api.vk.com/method/users.get' . '?' . urldecode(http_build_query($params))), true);
-                print_r($userInfo);
 
                 if (isset($userInfo['response'][0]['id'])) 
                 {
                     $userInfo = $userInfo['response'][0];
-
-                    session_start();
                     $_SESSION['user_info'] = $userInfo;
                 }
             }
