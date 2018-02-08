@@ -46,7 +46,7 @@
                     /* Добавление или обновление данных в таблице Users*/
                     
             
-                    $query = "SELECT * FROM users WHERE id = ' $userInfo[id]'";
+                    $query = "SELECT * FROM users WHERE id = '$userInfo[id]'";
                     $result = pg_query($query) or die(pg_last_error());
                     if(pg_num_rows($result) > 0)
                     {
@@ -72,7 +72,7 @@
                     
                     $_SESSION['user_info']  =  $userInfo;
                        
-                    $query = "SELECT * FROM users WHERE id = '$_SESSION[user_info][id]' LIMIT 1";
+                    $query = "SELECT * FROM users WHERE id = '$userInfo[id]' LIMIT 1";
                     $result = pg_query($query) or die(pg_last_error());
                     if(pg_num_rows($result) > 0)
                     {
