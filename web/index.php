@@ -141,7 +141,7 @@
 
     <div class="wrapper">
 
-        <header class = "lodingblock">
+        <header>
             <div class="autor ">
                 <div class="user_container flex_container_row_stretch">
                     <div style="width: 75px; height: 75px; background: url('<?php echo $_SESSION['user_info']['photo_big']; ?>'); background-size: cover; border-radius: 50%;">
