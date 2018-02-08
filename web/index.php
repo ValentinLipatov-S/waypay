@@ -170,12 +170,10 @@
 <?php
     $query = "SELECT * FROM users";
     $result = pg_query($query) or die(pg_last_error());
-    echo pg_num_rows($result);
     while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) 
     {
-        echo $line['photo_big'];
         echo '<div class="user_container flex_container_row_stretch">' .
-        '<div style="width: 75px; height: 75px; background: url(' . $line['photo_big'] . '); background-size: cover; border-radius: 50%;">' .
+        '<div style="width: 50px; height: 50px; background: url(' . $line['photo_big'] . '); background-size: cover; border-radius: 50%;">' .
         '</div>' .
         '<div style="flex: 1 1; padding: 0px 0px 0px 10px;">' .
             '<div>' .
@@ -186,7 +184,7 @@
     '</div>';
     }
     
-       pg_free_result($result);
+    pg_free_result($result);
     pg_close($dbconn);
 ?>
             </div>
