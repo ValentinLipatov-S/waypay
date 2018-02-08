@@ -1,5 +1,13 @@
 <?php 
     session_start();
+    
+    $dbconn = pg_connect("
+    host     = ec2-54-75-228-85.eu-west-1.compute.amazonaws.com
+    dbname   = ddrgbsg3qokpc2
+    user     = kbpivkrmvdkauu
+    password = 0p_EhxRACs9Q2b96sZ5Fs3zK_m
+    ")or die('Could not connect: ' . pg_last_error());
+    
     if (!isset($_SESSION['user_info']))
     {
         $client_id = '6361837';
@@ -23,7 +31,7 @@
             {
                 $params = array(
                     'user_ids'         => $token['user_id'],
-                    'fields'       => 'id,first_name,last_name,screen_name,sex,bdate,photo_big',
+                    'fields'       => 'id,first_name,last_name,screen_name,sex,bdate,photo_big,country',
                     'access_token' => $token['access_token'],
                     'v' => '5.71',
                     'name_case' => 'Nom'
@@ -34,6 +42,34 @@
                 if (isset($userInfo['response'][0]['id'])) 
                 {
                     $userInfo = $userInfo['response'][0];
+                    /* Добавление или обновление данных в таблице Users*/
+                    
+            
+                    $query = "SELECT * FROM users WHERE id = ' $userInfo[id]'";
+                    $result = pg_query($query) or die(pg_last_error());
+                    if(pg_num_rows($result) > 0)
+                    {
+                        $query = "UPDATE users SET id = '$userInfo[id]', 
+                        first_name = '$userInfo[first_name]',
+                        last_name =  '$userInfo[last_name]',
+                        screen_name =  '$userInfo[screen_name]', 
+                        sex = '$userInfo[sex]',
+                        bdate =  '$userInfo[bdate]',
+                        photo_big =  '$userInfo[photo_big]',
+                        country =  '$userInfo[country][title]' 
+                        
+                         WHERE id = '$userInfo[id]'";
+                         
+						$result = pg_query($query) or die(pg_last_error());	
+                    }
+                    else
+                    {
+                        $query = "INSERT INTO users (id, balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) 
+                        VALUES ('$userInfo[id]', '0.0', '$userInfo[first_name]', '$userInfo[last_name]', '$userInfo[screen_name]', 
+                        '$userInfo[sex]', '$userInfo[bdate]', '$userInfo[photo_big]', '$userInfo[country][title]')";
+						$result = pg_query($query) or die(pg_last_error());
+                    }
+                                
                     $_SESSION['user_info'] = $userInfo;
                     header("location: " .  $redirect_uri);
                 }
@@ -51,13 +87,30 @@
         }
     }
     else 
-    {
+    { 
         if(isset($_POST['logout']))
         {
             unset($_SESSION['user_info']);
             session_destroy();
         }
+        
+        $query = "SELECT * FROM users WHERE id = $_SESSION[user_info][id]; LIMIT 1";
+        $result = pg_query($query) or die(pg_last_error());
+        if(pg_num_rows($result) > 0)
+        {
+            $line = pg_fetch_array($result, null, PGSQL_ASSOC);
+            $_SESSION['user_info']['id'] = $line["id"];
+            $_SESSION['user_info']['first_name'] = $line["first_name"];
+            $_SESSION['user_info']['last_name'] = $line["last_name"];
+            $_SESSION['user_info']['screen_name'] = $line["screen_name"];
+            $_SESSION['user_info']['sex'] = $line["sex"];
+            $_SESSION['user_info']['bdate'] = $line["bdate"];
+            $_SESSION['user_info']['photo_big'] = $line["photo_big"];
+            $_SESSION['user_info']['country']['title'] = $line["country"]; 
+        }
     }
+    pg_free_result($result);
+    pg_close($dbconn);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
