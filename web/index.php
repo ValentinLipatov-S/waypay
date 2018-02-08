@@ -1,9 +1,9 @@
-<?php 
+<?php
 if (!isset($_SESSION['user_info']))
 {
-    $client_id = '6361837'; // ID РїСЂРёР»РѕР¶РµРЅРёСЏ
-    $client_secret = '9pohMcwaxBYL02WMTR3M'; // Р—Р°С‰РёС‰С‘РЅРЅС‹Р№ РєР»СЋС‡
-    $redirect_uri = 'https://waypay.herokuapp.com/'; // РђРґСЂРµСЃ СЃР°Р№С‚Р°
+    $client_id = '6361837';
+    $client_secret = '9pohMcwaxBYL02WMTR3M';
+    $redirect_uri = 'https://waypay.herokuapp.com/';
 
     $url = 'http://oauth.vk.com/authorize';
 
@@ -55,8 +55,7 @@ else
     }
 }
 ?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
     <title>Change from box to list</title>
@@ -214,5 +213,4 @@ else
         <div class="loadingbar lodingblock"></div>
     </div>
 </body>
-
 </html>
