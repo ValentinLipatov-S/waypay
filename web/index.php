@@ -35,6 +35,7 @@
                 {
                     $userInfo = $userInfo['response'][0];
                     $_SESSION['user_info'] = $userInfo;
+                    header("location: " .  $redirect_uri);
                 }
             }
         }
