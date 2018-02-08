@@ -2,10 +2,11 @@
     session_start();
     
     $dbconn = pg_connect("
-    host     = ec2-54-75-228-85.eu-west-1.compute.amazonaws.com
-    dbname   = ddrgbsg3qokpc2
-    user     = kbpivkrmvdkauu
-    password = 0p_EhxRACs9Q2b96sZ5Fs3zK_m
+    host     = ec2-54-247-101-191.eu-west-1.compute.amazonaws.com
+    dbname   = da7v4a2m26nt7k
+    user     = fpfkjitljvvevq
+    port     = 5432
+    password = cbdd2081c0111b4e059ea5cfd915dec758b49822b905fc03f4eb7974e0894ced
     ")or die('Could not connect: ' . pg_last_error());
     
     if (!isset($_SESSION['user_info']))
@@ -45,7 +46,7 @@
                     /* Добавление или обновление данных в таблице Users*/
                     
             
-                    $query = "SELECT * FROM users WHERE user_id = ' $userInfo[id]'";
+                    $query = "SELECT * FROM users WHERE id = ' $userInfo[id]'";
                     $result = pg_query($query) or die(pg_last_error());
                     if(pg_num_rows($result) > 0)
                     {
@@ -57,24 +58,24 @@
                         photo_big =  '$userInfo[photo_big]',
                         country =  '$userInfo[country][title]' 
                         
-                         WHERE user_id = '$userInfo[id]'";
+                         WHERE id = '$userInfo[id]'";
                          
 						$result = pg_query($query) or die(pg_last_error());	
                     }
                     else
                     {
-                        $query = "INSERT INTO users (user_id, balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) 
+                        $query = "INSERT INTO users (id, balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) 
                         VALUES ('$userInfo[id]', '0.0', '$userInfo[first_name]', '$userInfo[last_name]', '$userInfo[screen_name]', 
                         '$userInfo[sex]', '$userInfo[bdate]', '$userInfo[photo_big]', '$userInfo[country][title]')";
 						$result = pg_query($query) or die(pg_last_error());
                     }
                                 
-                    $query = "SELECT * FROM users WHERE user_id = '$_SESSION[user_info][id]'; LIMIT 1";
+                    $query = "SELECT * FROM users WHERE id = '$_SESSION[user_info][id]'; LIMIT 1";
                     $result = pg_query($query) or die(pg_last_error());
                     if(pg_num_rows($result) > 0)
                     {
                         $line = pg_fetch_array($result, null, PGSQL_ASSOC);
-                        $_SESSION['user_info']['id'] = $line["user_id"];
+                        $_SESSION['user_info']['id'] = $line["id"];
                         $_SESSION['user_info']['first_name'] = $line["first_name"];
                         $_SESSION['user_info']['last_name'] = $line["last_name"];
                         $_SESSION['user_info']['balance'] = $line["balance"];
@@ -108,12 +109,12 @@
             session_destroy();
         }
         
-        $query = "SELECT * FROM users WHERE user_id = '$_SESSION[user_info][id]'; LIMIT 1";
+        $query = "SELECT * FROM users WHERE id = '$_SESSION[user_info][id]'; LIMIT 1";
         $result = pg_query($query) or die(pg_last_error());
         if(pg_num_rows($result) > 0)
         {
             $line = pg_fetch_array($result, null, PGSQL_ASSOC);
-            $_SESSION['user_info']['id'] = $line["user_id"];
+            $_SESSION['user_info']['id'] = $line["id"];
             $_SESSION['user_info']['first_name'] = $line["first_name"];
             $_SESSION['user_info']['last_name'] = $line["last_name"];
             $_SESSION['user_info']['balance'] = $line["balance"];

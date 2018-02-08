@@ -1,11 +1,11 @@
 <?php
-$dbconn = pg_connect("
-	host     = ec2-54-217-245-66.eu-west-1.compute.amazonaws.com
-	dbname   = d1moulb9o83itl
-	user     = cfxbiqrrylhabo
-	port	 = 5432
-	password = 9df5fc487653ddec6e25d68ccea35d151387bcfe2c64229c5c350f431f3c9781
-")or die('Could not connect: ' . pg_last_error());
+    $dbconn = pg_connect("
+    host     = ec2-54-247-101-191.eu-west-1.compute.amazonaws.com
+    dbname   = da7v4a2m26nt7k
+    user     = fpfkjitljvvevq
+    port     = 5432
+    password = cbdd2081c0111b4e059ea5cfd915dec758b49822b905fc03f4eb7974e0894ced
+    ")or die('Could not connect: ' . pg_last_error());
 
 switch ($_GET["comand"])
 {
@@ -14,7 +14,7 @@ switch ($_GET["comand"])
         try 
         {  
             $query = "CREATE TABLE users (
-            user_id TEXT NOT NULL,
+            id TEXT NOT NULL,
 			balance double precision NOT NULL, 
             first_name TEXT NOT NULL,
             last_name TEXT NOT NULL,
