@@ -50,23 +50,13 @@
                     $result = pg_query($query) or die(pg_last_error());
                     if(pg_num_rows($result) > 0)
                     {
-                        $query = "UPDATE users first_name = '$userInfo[first_name]',
-                        last_name =  '$userInfo[last_name]',
-                        screen_name =  '$userInfo[screen_name]', 
-                        sex = '$userInfo[sex]',
-                        bdate =  '$userInfo[bdate]',
-                        photo_big =  '$userInfo[photo_big]',
-                        country =  '$userInfo[country][title]' 
-                        
-                         WHERE id = '$userInfo[id]'";
+                        $query = "UPDATE users first_name = '$userInfo[first_name]', last_name = '$userInfo[last_name]', screen_name = '$userInfo[screen_name]',  sex = '$userInfo[sex]', bdate = '$userInfo[bdate]', photo_big = '$userInfo[photo_big]', country = '$userInfo[country][title]' WHERE id = '$userInfo[id]'";
                          
 						$result = pg_query($query) or die(pg_last_error());	
                     }
                     else
                     {
-                        $query = "INSERT INTO users (id, balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) 
-                        VALUES ('$userInfo[id]', '0.0', '$userInfo[first_name]', '$userInfo[last_name]', '$userInfo[screen_name]', 
-                        '$userInfo[sex]', '$userInfo[bdate]', '$userInfo[photo_big]', '$userInfo[country][title]')";
+                        $query = "INSERT INTO users (id, balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) VALUES ('$userInfo[id]', '0.0', '$userInfo[first_name]', '$userInfo[last_name]', '$userInfo[screen_name]', '$userInfo[sex]', '$userInfo[bdate]', '$userInfo[photo_big]', '$userInfo[country][title]')";
 						$result = pg_query($query) or die(pg_last_error());
                     }
                     
