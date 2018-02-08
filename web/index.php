@@ -45,12 +45,11 @@
                     /* Добавление или обновление данных в таблице Users*/
                     
             
-                    $query = "SELECT * FROM users WHERE id = ' $userInfo[id]'";
+                    $query = "SELECT * FROM users WHERE user_id = ' $userInfo[id]'";
                     $result = pg_query($query) or die(pg_last_error());
                     if(pg_num_rows($result) > 0)
                     {
-                        $query = "UPDATE users SET id = '$userInfo[id]', 
-                        first_name = '$userInfo[first_name]',
+                        $query = "UPDATE users first_name = '$userInfo[first_name]',
                         last_name =  '$userInfo[last_name]',
                         screen_name =  '$userInfo[screen_name]', 
                         sex = '$userInfo[sex]',
@@ -58,13 +57,13 @@
                         photo_big =  '$userInfo[photo_big]',
                         country =  '$userInfo[country][title]' 
                         
-                         WHERE id = '$userInfo[id]'";
+                         WHERE user_id = '$userInfo[id]'";
                          
 						$result = pg_query($query) or die(pg_last_error());	
                     }
                     else
                     {
-                        $query = "INSERT INTO users (id, balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) 
+                        $query = "INSERT INTO users (user_id, balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) 
                         VALUES ('$userInfo[id]', '0.0', '$userInfo[first_name]', '$userInfo[last_name]', '$userInfo[screen_name]', 
                         '$userInfo[sex]', '$userInfo[bdate]', '$userInfo[photo_big]', '$userInfo[country][title]')";
 						$result = pg_query($query) or die(pg_last_error());
@@ -94,12 +93,12 @@
             session_destroy();
         }
         
-        $query = "SELECT * FROM users WHERE id = '$_SESSION[user_info][id]'; LIMIT 1";
+        $query = "SELECT * FROM users WHERE user_id = '$_SESSION[user_info][id]'; LIMIT 1";
         $result = pg_query($query) or die(pg_last_error());
         if(pg_num_rows($result) > 0)
         {
             $line = pg_fetch_array($result, null, PGSQL_ASSOC);
-            $_SESSION['user_info']['id'] = $line["id"];
+            $_SESSION['user_info']['id'] = $line["user_id"];
             $_SESSION['user_info']['first_name'] = $line["first_name"];
             $_SESSION['user_info']['last_name'] = $line["last_name"];
             $_SESSION['user_info']['screen_name'] = $line["screen_name"];

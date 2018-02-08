@@ -14,7 +14,7 @@ switch ($_GET["comand"])
         try 
         {  
             $query = "CREATE TABLE users (
-            id TEXT NOT NULL,
+            user_id TEXT NOT NULL,
 			balance FLOAT NOT NULL, 
             first_name TEXT NOT NULL,
             last_name TEXT NOT NULL,
