@@ -153,19 +153,23 @@
             <input type="text" class="text" placeholder="Поиск" />
         </div>
         <div class="container">
-
-
-
             <div class="user_container flex_container_row_stretch">
-
-                <div style="width: 50px; height: 50px; background: url(2.png); ; background-size: cover; border-radius: 50%;"></div>
-
-                <div style="flex: 1 1; padding: 0px 0px 0px 10px;">
-                    <div>
-                        <text class="name" style="display: flex;">Липатов Валентин</text>
-                        <text style="display: flex; font-size: 11px;">123456789</text>
+                
+                
+                
+                <div class="user_container flex_container_row_stretch">
+                    <div style="width: 75px; height: 75px; background: url('<?php echo $_SESSION['user_info']['photo_big']; ?>'); background-size: cover; border-radius: 50%;">
+                    </div>
+                    <div style="flex: 1 1; padding: 0px 0px 0px 10px;">
+                        <div>
+                            <text class="name" style="display: flex;"><?php echo $_SESSION['user_info']['first_name']; ?>&nbsp;<?php echo $_SESSION['user_info']['last_name'];?></text>
+                            <text style="display: flex; font-size: 11px;"><?php echo $_SESSION['user_info']['id']; ?></text>
+                        </div>
                     </div>
                 </div>
+                
+                
+                
             </div>
 
         </div>
