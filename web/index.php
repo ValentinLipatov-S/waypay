@@ -127,8 +127,6 @@
             $_SESSION['user_info']['country'] = $line["country"]; 
         }
     }
-    pg_free_result($result);
-    pg_close($dbconn);
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
@@ -187,6 +185,9 @@
         '</div>' .
     '</div>';
     }
+    
+       pg_free_result($result);
+    pg_close($dbconn);
 ?>
             </div>
 
