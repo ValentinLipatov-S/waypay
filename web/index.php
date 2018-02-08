@@ -166,7 +166,7 @@
             <input type="text" class="text" placeholder="Поиск" />
         </div>
         <div class="container">
-            <div class="user_container flex_container_row_stretch">
+ 
 <?php
     $query = "SELECT * FROM users";
     $result = pg_query($query) or die(pg_last_error());
@@ -187,7 +187,7 @@
     pg_free_result($result);
     pg_close($dbconn);
 ?>
-            </div>
+   
 
         </div>
         <div class="loadingbar lodingblock"></div>
