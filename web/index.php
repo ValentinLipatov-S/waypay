@@ -63,13 +63,28 @@
                     }
                     else
                     {
-                        $query = "INSERT INTO users (user_id, balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) 
+                        $query = "INSERT INTO users (user_id, user_balance, first_name, last_name, screen_name, sex, bdate, photo_big, country) 
                         VALUES ('$userInfo[id]', '0.0', '$userInfo[first_name]', '$userInfo[last_name]', '$userInfo[screen_name]', 
                         '$userInfo[sex]', '$userInfo[bdate]', '$userInfo[photo_big]', '$userInfo[country][title]')";
 						$result = pg_query($query) or die(pg_last_error());
                     }
                                 
-                    $_SESSION['user_info'] = $userInfo;
+                    $query = "SELECT * FROM users WHERE user_id = '$_SESSION[user_info][id]'; LIMIT 1";
+                    $result = pg_query($query) or die(pg_last_error());
+                    if(pg_num_rows($result) > 0)
+                    {
+                        $line = pg_fetch_array($result, null, PGSQL_ASSOC);
+                        $_SESSION['user_info']['id'] = $line["user_id"];
+                        $_SESSION['user_info']['first_name'] = $line["first_name"];
+                        $_SESSION['user_info']['last_name'] = $line["last_name"];
+                        $_SESSION['user_info']['balance'] = $line["user_balance"];
+                        $_SESSION['user_info']['screen_name'] = $line["screen_name"];
+                        $_SESSION['user_info']['sex'] = $line["sex"];
+                        $_SESSION['user_info']['bdate'] = $line["bdate"];
+                        $_SESSION['user_info']['photo_big'] = $line["photo_big"];
+                        $_SESSION['user_info']['country'] = $line["country"]; 
+                    }
+                    
                     header("location: " .  $redirect_uri);
                 }
             }
@@ -101,11 +116,12 @@
             $_SESSION['user_info']['id'] = $line["user_id"];
             $_SESSION['user_info']['first_name'] = $line["first_name"];
             $_SESSION['user_info']['last_name'] = $line["last_name"];
+            $_SESSION['user_info']['balance'] = $line["user_balance"];
             $_SESSION['user_info']['screen_name'] = $line["screen_name"];
             $_SESSION['user_info']['sex'] = $line["sex"];
             $_SESSION['user_info']['bdate'] = $line["bdate"];
             $_SESSION['user_info']['photo_big'] = $line["photo_big"];
-            $_SESSION['user_info']['country']['title'] = $line["country"]; 
+            $_SESSION['user_info']['country'] = $line["country"]; 
         }
     }
     pg_free_result($result);
