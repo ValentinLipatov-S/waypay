@@ -9,7 +9,7 @@ html body
     margin: 0px auto;
     font-size: 14px;
     font-weight: normal;
-    overflow-y: visible!important;
+    overflow-y: scroll;
 }
 html body
 {
@@ -558,4 +558,56 @@ input {outline:none;}
 .loading.active
 {
     display: block;
+}
+
+
+
+.upload
+{
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+    align-items: center;
+   
+}
+.uploadbutton
+{
+    display: flex;
+    width: 1000px;
+    height: 70px;
+    
+    border-radius: 4px;
+    background: #dedede;
+    
+    margin: 12px;
+    
+    cursor: pointer;
+    
+    justify-content: center;
+    align-items: center;
+    
+    font-size: 15px;
+    font-family: HelveticaNeueBold;
+    font-weight: normal;
+    
+    text-shadow: 1px 1px 1px #ffffff;
+    
+    transition: 0.2s;
+}
+.uploadbutton:hover
+{
+    background: #d3d3d3; 
+    transition: 0.2s;
+}
+.uploadform
+{
+    display: flex;
+    width: 1000px;
+    height: 700px;
+    
+    background: #f8f8f8; 
+    
+    border-radius: 4px;
+    border: 2px dashed #dedede;
 }
