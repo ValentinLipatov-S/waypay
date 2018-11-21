@@ -8,9 +8,13 @@ function Router() {
     this.WorkForm;
 
     this.parametrs = [];
+    this.parametrs['size'] = [];
+    this.parametrs['type'] = [];
+    this.parametrs['condition'] = [];
+        
     this.path = [];
 
-    Router.prototype.SetParametrs = function SetParametrs() {
+    Router.prototype.SetParametrsRouter = function SetParametrsRouter() {
         this.parametrs = [];
         this.parametrs['size'] = [];
         this.parametrs['type'] = [];
@@ -37,31 +41,51 @@ function Router() {
 
     Router.prototype.Create = function Create() {
         window.onpopstate = this.Update.bind(this);
-        this.SetParametrs();
+        this.SetParametrsRouter();
         switch (this.path[1]) {
             case "search":
                 this.WorkForm = new SearchForm();
+                this.WorkForm.Create(this.parametrs);
+                 
+                break;            
+            case "upload":
+                this.WorkForm = new UploadForm();
                 this.WorkForm.Create();
-                this.WorkForm.SetParametrs(this.parametrs);
                 break;
             default:
                 ChangeURL({}, "Поиск", "search");
                 this.WorkForm = new SearchForm();
-                this.WorkForm.Create();
-                this.WorkForm.SetParametrs(this.parametrs);
+                this.WorkForm.Create(this.parametrs);
                 break;
         }
     }
 
     Router.prototype.Update = function Update() {
-        this.SetParametrs();
+        this.SetParametrsRouter();
         switch (this.path[1]) {
             case "search":
-                this.WorkForm.SetParametrs(this.parametrs);
+                this.WorkForm.SetParametrsSearch(this.parametrs);
                 break;
             default: break;
         }
     }
+}
+
+function UploadForm ()
+{
+    this.url = "upload"
+    this.name = "Загрузка"
+    
+    this.node;
+    
+    this.node = document.querySelectorAll('.node')[0];
+    this.upload = new CreateDiv(this.node, "upload");
+       
+    this.uploadbutton = new CreateDiv(this.upload.node, "uploadbutton");
+    this.uploadform = new CreateDiv(this.upload.node, "uploadform");
+      
+      
+    this.uploadbutton.node.textContent = "Выбрать файл";
 }
 
 function SearchForm() {
@@ -75,26 +99,24 @@ function SearchForm() {
     this.workzone;
     this.parametrs = [];
 
-    SearchForm.prototype.Create = function Create() {
+    SearchForm.prototype.Create = function Create(parametrs) {
 
         this.parametrs = [];
         this.parametrs['size'] = [];
         this.parametrs['type'] = [];
         this.parametrs['condition'] = [];
 
-        this.node = document.querySelectorAll('.workarea')[0];
-
-
-
-
+        this.parametrs = parametrs;
+       
+        this.node = document.querySelectorAll('.node')[0];
+        this.workarea = new CreateDiv(this.node, "workarea");
+        this.node = this.workarea.node;
+ 
 
         this.Inputs["sort"] = new Sort(this.node, this.ChangeParametr.bind(this));
         new Clear(this.Inputs["sort"].div, this.Clear.bind(this));
 
-
         this.workzone = new CreateDiv(this.node, "workzone");
-
-
 
         this.search = new CreateDiv(this.workzone.node, "right");
         this.search_area = new CreateDiv(this.search.node, "right_box");
@@ -115,9 +137,6 @@ function SearchForm() {
         this.Inputs["sex"] = new SexChoose(this.search_area.node, this.ChangeSex.bind(this));
         this.CreateLine(this.search_area.node);
 
-
-
-
         var div_types = new CreateDiv(this.search_area.node, "types");
         $.ajax({
             method: "GET",
@@ -126,6 +145,7 @@ function SearchForm() {
                 //var obj = JSON.parse(data);
                 var obj = data;
                 this.CreateCategories(div_types.node, obj, this.CheckBoxChange.bind(this));
+                this.SetParametrsSearch(this.parametrs);
             }).bind(this)
         });
 
@@ -138,6 +158,7 @@ function SearchForm() {
                 //var obj = JSON.parse(data);
                 var obj = data;
                 this.CreateCategories(div_sizes.node, obj, this.CheckBoxChange.bind(this));
+                this.SetParametrsSearch(this.parametrs);
             }).bind(this)
         });
 
@@ -156,39 +177,46 @@ function SearchForm() {
                 //var obj = JSON.parse(data);
                 var obj = data;
                 this.CreateCategories(div_conditions.node, obj, this.CheckBoxChange.bind(this));
+                this.SetParametrsSearch(this.parametrs);
             }).bind(this)
         });
 
         this.items = new Items(this.items.node);
         //this.node.appendChild(this.workzone);
     };
+    
     SearchForm.prototype.Clear = function Clear() {
         this.parametrs = [];
         this.parametrs['size'] = [];
         this.parametrs['type'] = [];
         this.parametrs['condition'] = [];
         ChangeURL(this.parametrs, this.name, this.url);
-        this.SetParametrs(this.parametrs);
+        this.SetParametrsSearch(this.parametrs);    
     }
 
     SearchForm.prototype.CreateLine = function CreateLine(node) {
         var div = new CreateDiv(node, "line");
     }
 
-
-
-
     SearchForm.prototype.CreateCategories = function CreateCategories(node, obj, callback) {
         for (var key in obj) {
             var a = new Container(node, key);
             this.CheckBoxs[obj[key]["name"]] = {};
             for (var key_1 in obj[key]["all"])
-                if (typeof obj[key]["all"][key_1] === "object") {
+            {
+                if (typeof obj[key]["all"][key_1] === "object") 
+                {
                     var b = new PopUpMenu(a.node, key_1);
                     for (var key_2 in obj[key]["all"][key_1])
+                    {
                         this.CheckBoxs[obj[key]["name"]][key_2] = new CheckBox(b, b.node, obj[key]["name"], key_2, obj[key]["all"][key_1][key_2], callback.bind(this));
+                    }
                 }
-                else this.CheckBoxs[obj[key]["name"]][key_1] = new CheckBox(undefined, a.node, obj[key]["name"], key_1, obj[key]["all"][key_1], callback.bind(this));
+                else 
+                {
+                    this.CheckBoxs[obj[key]["name"]][key_1] = new CheckBox(undefined, a.node, obj[key]["name"], key_1, obj[key]["all"][key_1], callback.bind(this));
+                }
+            }
         }
     }
 
@@ -214,15 +242,16 @@ function SearchForm() {
         else this.parametrs[name] = value;
         ChangeURL(this.parametrs, this.name, this.url);
         this.GetItems();
+        
+        
     };
 
 
 
     /* Установка параметров */
-    SearchForm.prototype.SetParametrs = function SetParametrs(parametrs) {
-        
+    SearchForm.prototype.SetParametrsSearch = function SetParametrsSearch(parametrs) {
+    
         this.parametrs = parametrs;
-        
         if (this.parametrs['size'] === undefined || this.parametrs['size'] === null)
             this.parametrs['size'] = [];
         if (this.parametrs['type'] === undefined || this.parametrs['type'] === null)
@@ -231,26 +260,32 @@ function SearchForm() {
             this.parametrs['condition'] = [];
 
         for (var key in this.CheckBoxs)
+        {
             for (var id in this.CheckBoxs[key])
+            {      
                 this.CheckBoxs[key][id].SetFalse();
-
+            }
+        }
+        
         for (var key in this.Inputs)
             this.Inputs[key].SetDefaultValue();
-
+            
         for (var key in this.parametrs) {
+            
             switch (key) {
                 case 'type':
-                    for (var i = 0; i < this.parametrs[key].length; i++)
-                    {                        
-                        this.CheckBoxs[key]['1'].SetTrue();
-                    }
+                      for (var i = 0; i < this.parametrs[key].length; i++)
+                        if(this.CheckBoxs[key] != undefined && this.CheckBoxs[key] != null)
+                        this.CheckBoxs[key][this.parametrs[key][i]].SetTrue();
                     break;
                 case 'size':
                     for (var i = 0; i < this.parametrs[key].length; i++)
+                        if(this.CheckBoxs[key] != undefined && this.CheckBoxs[key] != null)
                         this.CheckBoxs[key][this.parametrs[key][i]].SetTrue();
                     break;
                 case 'condition':
                     for (var i = 0; i < this.parametrs[key].length; i++)
+                        if(this.CheckBoxs[key] != undefined && this.CheckBoxs[key] != null)
                         this.CheckBoxs[key][this.parametrs[key][i]].SetTrue();
                     break;
                 default: this.Inputs[key].SetValue(this.parametrs[key]); break;
@@ -267,12 +302,14 @@ function SearchForm() {
             url: "/server/server.php",
             method: "GET",
             data: "comand=get&" + GetURL(this.parametrs),
-            beforeSend: (function (data) {
+            beforeSend: (function (data) {       
+                  
                 this.counter = 0;
                 this.items.Clear();
                 this.items.Start();
             }).bind(this),
             success: (function (data) {
+                 console.log(data);      
                 this.items.Stop();
                 var obj = JSON.parse(data);
                 for (var key in obj) {
