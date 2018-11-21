@@ -244,7 +244,7 @@ function SearchForm() {
                     {
                         console.log(key);
                         console.log(parametrs[key][i]);
-                        console.log(this.CheckBoxs[key][parametrs[key][i]]);
+                        console.log(this.CheckBoxs);
                         
                         this.CheckBoxs[key][parametrs[key][i]].SetTrue();
                     }
