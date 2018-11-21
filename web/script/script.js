@@ -241,12 +241,8 @@ function SearchForm() {
             switch (key) {
                 case 'type':
                     for (var i = 0; i < this.parametrs[key].length; i++)
-                    {
-                        console.log(key);
-                        console.log(parametrs[key][i]);
-                        console.log(this.CheckBoxs);
-                        
-                        this.CheckBoxs[key].this.parametrs[key][i].SetTrue();
+                    {                        
+                        this.CheckBoxs[key][parseInt(this.parametrs[key][i])].SetTrue();
                     }
                     break;
                 case 'size':
