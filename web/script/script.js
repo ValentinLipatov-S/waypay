@@ -106,7 +106,7 @@ function SearchForm() {
         var div_types = new CreateDiv(this.search_area.node, "types");
         $.ajax({
             method: "GET",
-            url: "json//types.json",
+            url: "https://waypay.herokuapp.com//json//types.json",
             success: (function (data) {
                 //var obj = JSON.parse(data);
                 var obj = data;
@@ -118,7 +118,7 @@ function SearchForm() {
         var div_sizes = new CreateDiv(this.search_area.node, "sizes");
         $.ajax({
             method: "GET",
-            url: "json//sizes.json",
+            url: "https://waypay.herokuapp.com//json//sizes.json",
             success: (function (data) {
                 //var obj = JSON.parse(data);
                 var obj = data;
@@ -136,7 +136,7 @@ function SearchForm() {
         var div_conditions = new CreateDiv(this.search_area.node, "conditions");
         $.ajax({
             method: "GET",
-            url: "json//conditions.json",
+            url: "https://waypay.herokuapp.com//json//conditions.json",
             success: (function (data) {
                 //var obj = JSON.parse(data);
                 var obj = data;
