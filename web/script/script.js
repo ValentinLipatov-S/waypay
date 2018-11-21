@@ -242,7 +242,7 @@ function SearchForm() {
                 case 'type':
                     for (var i = 0; i < this.parametrs[key].length; i++)
                     {                        
-                        this.CheckBoxs[key][parseInt(this.parametrs[key][i])].SetTrue();
+                        this.CheckBoxs[key][1].SetTrue();
                     }
                     break;
                 case 'size':
