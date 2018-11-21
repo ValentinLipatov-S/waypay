@@ -1,5 +1,6 @@
 ﻿"use strict";
 
+
 var MyRouter;
 window.addEventListener("load", function () { MyRouter = new Router(); MyRouter.Create(); });
 
@@ -83,26 +84,40 @@ function SearchForm() {
 
         this.node = document.querySelectorAll('.workarea')[0];
 
+
+
+
+
         this.Inputs["sort"] = new Sort(this.node, this.ChangeParametr.bind(this));
         new Clear(this.Inputs["sort"].div, this.Clear.bind(this));
 
+
         this.workzone = new CreateDiv(this.node, "workzone");
+
+
 
         this.search = new CreateDiv(this.workzone.node, "right");
         this.search_area = new CreateDiv(this.search.node, "right_box");
 
         this.items_zone = new CreateDiv(this.workzone.node, "qr");
 
+
         var div_search = document.createElement("div");
         div_search.classList.add("search_line");
         this.items_zone.node.appendChild(div_search);
         this.Inputs["query"] = new Search(div_search, this.ChangeParametr.bind(this));
 
+
         this.items = new CreateDiv(this.items_zone.node, "left");
+
+
 
         this.Inputs["sex"] = new SexChoose(this.search_area.node, this.ChangeSex.bind(this));
         this.CreateLine(this.search_area.node);
-        
+
+
+
+
         var div_types = new CreateDiv(this.search_area.node, "types");
         $.ajax({
             method: "GET",
@@ -159,7 +174,10 @@ function SearchForm() {
     SearchForm.prototype.CreateLine = function CreateLine(node) {
         var div = new CreateDiv(node, "line");
     }
-    
+
+
+
+
     SearchForm.prototype.CreateCategories = function CreateCategories(node, obj, callback) {
         for (var key in obj) {
             var a = new Container(node, key);
@@ -197,6 +215,8 @@ function SearchForm() {
         ChangeURL(this.parametrs, this.name, this.url);
         this.GetItems();
     };
+
+
 
     /* Установка параметров */
     SearchForm.prototype.SetParametrs = function SetParametrs(parametrs) {
@@ -263,7 +283,6 @@ function SearchForm() {
                 this.items.Stop();
             }).bind(this),
         });
-       */ 
-        
+        */
     };
 }
