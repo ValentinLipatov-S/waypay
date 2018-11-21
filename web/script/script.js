@@ -220,7 +220,9 @@ function SearchForm() {
 
     /* Установка параметров */
     SearchForm.prototype.SetParametrs = function SetParametrs(parametrs) {
+        
         this.parametrs = parametrs;
+        
         if (this.parametrs['size'] === undefined || this.parametrs['size'] === null)
             this.parametrs['size'] = [];
         if (this.parametrs['type'] === undefined || this.parametrs['type'] === null)
@@ -239,7 +241,13 @@ function SearchForm() {
             switch (key) {
                 case 'type':
                     for (var i = 0; i < this.parametrs[key].length; i++)
-                        this.CheckBoxs[key][this.parametrs[key][i]].SetTrue();
+                    {
+                        console.log(key);
+                        console.log(parametrs[key][i]);
+                        console.log(this.CheckBoxs[key][parametrs[key][i]]);
+                        
+                        this.CheckBoxs[key][parametrs[key][i]].SetTrue();
+                    }
                     break;
                 case 'size':
                     for (var i = 0; i < this.parametrs[key].length; i++)
